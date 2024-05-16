@@ -3,5 +3,98 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "lottery": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "projects/lottery",
+      "sourceRoot": "projects/lottery/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/lottery",
+            "index": "projects/lottery/src/index.html",
+            "browser": "projects/lottery/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/lottery/tsconfig.app.json",
+            "assets": [
+              "projects/lottery/src/favicon.ico",
+              "projects/lottery/src/assets"
+            ],
+            "styles": [
+              "projects/lottery/src/styles.css"
+            ],
+            "scripts": [],
+            "server": "projects/lottery/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "projects/lottery/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "lottery:build:production"
+            },
+            "development": {
+              "buildTarget": "lottery:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "lottery:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/lottery/tsconfig.spec.json",
+            "assets": [
+              "projects/lottery/src/favicon.ico",
+              "projects/lottery/src/assets"
+            ],
+            "styles": [
+              "projects/lottery/src/styles.css"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
   }
 }
